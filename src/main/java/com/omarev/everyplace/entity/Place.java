@@ -1,5 +1,6 @@
 package com.omarev.everyplace.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -7,6 +8,8 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -40,6 +43,14 @@ public class Place {
 
     @Column(nullable = false)
     private Double rate = 0d;
+
+    @Column(nullable = false, name = "rate_count")
+    private Long rateCount = 0L;
+
+    @ToString.Exclude
+    @JsonManagedReference
+    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<PlaceImage> images;
 
     //@Column(nullable = false)
     //private User createdBy;

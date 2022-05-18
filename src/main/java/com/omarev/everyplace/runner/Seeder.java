@@ -1,6 +1,7 @@
 package com.omarev.everyplace.runner;
 
 import com.omarev.everyplace.entity.Place;
+import com.omarev.everyplace.entity.PlaceImage;
 import com.omarev.everyplace.entity.User;
 import com.omarev.everyplace.service.PlaceService;
 import com.omarev.everyplace.service.UserService;
@@ -8,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Component
@@ -25,18 +29,52 @@ public class Seeder implements CommandLineRunner {
 
         System.out.println("Seed places");
 
-        Place place = new Place();
-        place.setName("Test Place");
-        place.setDescription("Test description");
-        place.setLatitude("1");
-        place.setLongitude("1");
-        place.setRate(0d);
+        Place sofia = new Place();
+        sofia.setName("Test Place");
+        sofia.setDescription("Test description");
+        sofia.setLatitude("1");
+        sofia.setLongitude("1");
+        sofia.setRate(0d);
+        sofia.setRateCount(0L);
 
-        placeService.save(place);
+        Place savedPlace = placeService.save(sofia);
 
-        Place place2 = new Place(UUID.fromString("3f683a3a-4fe9-49d5-a01e-eb747c466774"),"Test2 Place", "Test2 description", "2", "2", 0d);
+        System.out.println(savedPlace.getId());
 
-        placeService.save(place2);
+        Set images = new HashSet<PlaceImage>();
+        images.add(
+            PlaceImage.builder()
+                .place(savedPlace.getId())
+                .path("https://en.wikipedia.org/wiki/Sofia#/media/File:Sofia_333.jpg")
+                .build()
+        );
+        savedPlace.setImages(images);
+
+        placeService.save(savedPlace);
+
+        Place varna = new Place(
+            UUID.fromString("3f683a3a-4fe9-49d5-a01e-eb747c466774"),
+            "Varna",
+            "Test2 description",
+            "2",
+            "2",
+            0d,
+            0L,
+                null
+        );
+
+        placeService.save(varna);
+
+        Set varnaImages = new HashSet<PlaceImage>();
+        images.add(
+            PlaceImage.builder()
+                .place(savedPlace.getId())
+                .path("https://en.wikipedia.org/wiki/Varna,_Bulgaria#/media/File:Varna-Collage-TB.jpg")
+                .build()
+        );
+        savedPlace.setImages(images);
+
+        placeService.save(savedPlace);
 
         System.out.println("Seed users");
         User user = User.builder().username("user").password("password").build();
