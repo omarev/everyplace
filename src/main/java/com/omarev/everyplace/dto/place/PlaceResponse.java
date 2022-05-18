@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Builder
@@ -21,4 +24,6 @@ public class PlaceResponse {
     private String longitude;
 
     private Double rate;
+
+    private Set images;
 }

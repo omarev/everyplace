@@ -4,13 +4,18 @@ import com.omarev.everyplace.dto.place.PlaceCreateRequest;
 import com.omarev.everyplace.dto.place.PlaceResponse;
 import com.omarev.everyplace.dto.place.PlaceUpdateRequest;
 import com.omarev.everyplace.entity.Place;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class PlaceConvertor {
+
+    @Autowired
+    private ImageConvertor imageConvertor;
 
     public Place convert(PlaceCreateRequest request){
         return Place.builder()
@@ -45,6 +50,11 @@ public class PlaceConvertor {
                 .latitude(place.getLatitude())
                 .longitude(place.getLongitude())
                 .rate(place.getRate())
+                .images(
+                    place.getImages()
+                        .stream()
+                        .map(image -> imageConvertor.convert(image)).collect(Collectors.toSet())
+                )
                 .build();
     }
 }

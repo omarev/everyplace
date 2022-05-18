@@ -30,32 +30,40 @@ public class Seeder implements CommandLineRunner {
         System.out.println("Seed places");
 
         Place sofia = new Place();
-        sofia.setName("Test Place");
-        sofia.setDescription("Test description");
+        sofia.setName("Sofia");
+        sofia.setDescription("Sofia is the capital and largest city of Bulgaria. It is situated in the Sofia Valley at the foot of the Vitosha mountain in the western parts of the country.");
         sofia.setLatitude("1");
         sofia.setLongitude("1");
         sofia.setRate(0d);
         sofia.setRateCount(0L);
 
-        Place savedPlace = placeService.save(sofia);
+        Place savedSofia = placeService.save(sofia);
 
-        System.out.println(savedPlace.getId());
+        System.out.println(savedSofia.getId());
 
         Set images = new HashSet<PlaceImage>();
         images.add(
             PlaceImage.builder()
-                .place(savedPlace.getId())
+                .place(savedSofia.getId())
                 .path("https://en.wikipedia.org/wiki/Sofia#/media/File:Sofia_333.jpg")
                 .build()
         );
-        savedPlace.setImages(images);
+        images.add(
+            PlaceImage.builder()
+                .place(savedSofia.getId())
+                .path("https://upload.wikimedia.org/wikipedia/commons/d/d2/BusinessParkSofia_view3.jpg")
+                .build()
+        );
 
-        placeService.save(savedPlace);
+
+        savedSofia.setImages(images);
+
+        placeService.save(savedSofia);
 
         Place varna = new Place(
             UUID.fromString("3f683a3a-4fe9-49d5-a01e-eb747c466774"),
             "Varna",
-            "Test2 description",
+            "Varna is the third-largest city in Bulgaria and the largest city and seaside resort on the Bulgarian Black Sea Coast and in the Northern Bulgaria region.",
             "2",
             "2",
             0d,
@@ -63,18 +71,18 @@ public class Seeder implements CommandLineRunner {
                 null
         );
 
-        placeService.save(varna);
+        Place varnaSaved = placeService.save(varna);
 
         Set varnaImages = new HashSet<PlaceImage>();
-        images.add(
+        varnaImages.add(
             PlaceImage.builder()
-                .place(savedPlace.getId())
+                .place(varnaSaved.getId())
                 .path("https://en.wikipedia.org/wiki/Varna,_Bulgaria#/media/File:Varna-Collage-TB.jpg")
                 .build()
         );
-        savedPlace.setImages(images);
+        varnaSaved.setImages(varnaImages);
 
-        placeService.save(savedPlace);
+        placeService.save(varnaSaved);
 
         System.out.println("Seed users");
         User user = User.builder().username("user").password("password").build();

@@ -49,7 +49,7 @@ public class Place {
 
     @ToString.Exclude
     @JsonManagedReference
-    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<PlaceImage> images;
 
     //@Column(nullable = false)
