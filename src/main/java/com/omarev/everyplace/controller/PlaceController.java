@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -30,11 +32,14 @@ public class PlaceController {
     private PlaceService placeService;
 
     @GetMapping()
-    public List<Place> getPlaces() {
+    public ResponseEntity<Set<PlaceResponse>> getPlaces() {
+        return ResponseEntity.ok(
+            placeService.findAll()
+                .stream()
+                .map(place -> placeConvertor.convert(place))
+                .collect(Collectors.toSet())
+        );
 
-        List<Place> places = placeService.findAll();
-
-        return places;
     }
 
     @GetMapping(value = "/{id}")
