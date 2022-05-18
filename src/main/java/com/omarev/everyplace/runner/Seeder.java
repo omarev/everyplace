@@ -1,7 +1,9 @@
 package com.omarev.everyplace.runner;
 
 import com.omarev.everyplace.entity.Place;
+import com.omarev.everyplace.entity.User;
 import com.omarev.everyplace.service.PlaceService;
+import com.omarev.everyplace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -14,13 +16,14 @@ public class Seeder implements CommandLineRunner {
     @Autowired
     PlaceService placeService;
 
+    @Autowired
+    UserService userService;
+
     @Override
     public void run(String... args) throws Exception {
         System.out.println("Seeder started");
 
-        System.out.println(UUID.randomUUID());
-
-        //Place place = new Place(UUID.randomUUID(), "Test Place", "Test description", "1", "1", 0d);
+        System.out.println("Seed places");
 
         Place place = new Place();
         place.setName("Test Place");
@@ -34,6 +37,11 @@ public class Seeder implements CommandLineRunner {
         Place place2 = new Place(UUID.fromString("3f683a3a-4fe9-49d5-a01e-eb747c466774"),"Test2 Place", "Test2 description", "2", "2", 0d);
 
         placeService.save(place2);
+
+        System.out.println("Seed users");
+        User user = User.builder().username("user").password("password").build();
+
+        userService.save(user);
 
         System.out.println("Seeder finished!");
     }
