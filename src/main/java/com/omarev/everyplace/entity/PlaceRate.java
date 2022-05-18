@@ -20,5 +20,9 @@ public class PlaceRate {
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
+    private Place place;
+
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 }

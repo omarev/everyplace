@@ -1,29 +1,22 @@
-package com.omarev.everyplace;
+package com.omarev.everyplace.runner;
 
 import com.omarev.everyplace.entity.Place;
 import com.omarev.everyplace.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Component;
 
-import javax.xml.crypto.Data;
-import java.util.Date;
 import java.util.UUID;
 
-@SpringBootApplication
-public class SeedConsoleApplication implements CommandLineRunner {
-
-    public static void main(String[] args) {
-        SpringApplication.run(SeedConsoleApplication.class, args);
-    }
+@Component
+public class Seeder implements CommandLineRunner {
 
     @Autowired
     PlaceService placeService;
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("TEST");
+        System.out.println("Seeder started");
 
         System.out.println(UUID.randomUUID());
 
@@ -42,6 +35,6 @@ public class SeedConsoleApplication implements CommandLineRunner {
 
         placeService.save(place2);
 
-
+        System.out.println("Seeder finished!");
     }
 }
