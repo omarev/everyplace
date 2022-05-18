@@ -1,8 +1,8 @@
 package com.omarev.everyplace.dto.place;
 
+import java.util.Set;
 import java.util.UUID;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
